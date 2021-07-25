@@ -1,0 +1,10 @@
+@mixin flex($justify, $align) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin button_reset {
+  background: transparent;
+  border: none;
+}

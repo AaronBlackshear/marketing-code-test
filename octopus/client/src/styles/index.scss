@@ -1,0 +1,343 @@
+@import './variables';
+@import './mixins';
+
+* {
+  font-family: "roboto", sans-serif;
+  font-weight: normal;
+  font-display: swap;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  position: relative;
+  height: 100%;
+}
+
+button {
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    &:hover {
+      cursor: no-drop;
+    }
+  }
+}
+
+.container {
+  @include flex(stretch, stretch);
+  flex-direction: column;
+  min-height: 100vh;
+
+  main {
+    background-color: $dark-blue;
+    flex: auto;
+  }
+}
+
+.header {
+  @include flex(space-between, center);
+  background-color: $dark-blue;
+  padding: 4px 8px;
+
+  .company-logo {
+    display: block;
+    @include flex(flex-start, flex-start);
+
+    img {
+      height: 20px;
+    }
+  }
+
+  .cart-button {
+    @include button_reset;
+
+    img {
+      height: 20px;
+    }
+  }
+
+  @media (min-width: $sm-screen) {
+    padding: 10px 20px;
+  }
+}
+
+.cart-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: $blue;
+  width: 90vw;
+  max-width: 400px;
+  height: 100vh;
+  z-index: 1000;
+  padding: 10px 20px;
+  transform: translateX(100%);
+  transition: 0.3s ease-in-out;
+
+  &.open {
+    transform: translateX(0%);
+  }
+
+  .cart-header {
+    @include flex(space-between, center);
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 28px;
+      font-weight: bold;
+      color: $white;
+    }
+
+    button {
+      font-size: 20px;
+      font-weight: bold;
+      color: $white;
+      background: transparent;
+      border: none;
+    }
+  }
+
+  .cart-products-list {
+    @include flex(flex-start, flex-start);
+    flex-direction: column;
+
+    .cart-product {
+      @include flex(flex-start, center);
+      width: 100%;
+
+      .cart-product-image {
+        width: 20%;
+        margin-right: 10px;
+      }
+
+      .cart-product-details {
+        .cart-product-name {
+          font-weight: bold;
+          font-size: 18px;
+          color: $white;
+          margin-bottom: 2px;
+        }
+
+        .cart-product-price {
+          font-size: 14px;
+          color: $white;
+        }
+
+        .cart-product-remove {
+          color: red;
+          font-size: 12px;
+          background: transparent;
+          border: transparent;
+          padding: 4px 0px;
+        }
+      }
+    }
+
+    .cart-empty {
+      font-weight: bold;
+      font-size: 22px;
+      color: $white;
+    }
+  }
+}
+
+.section-container {
+  padding: 15px 20px;
+
+  .section-title,
+  .section-text {
+    color: $white;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .section-text {
+    font-size: 14px;
+  }
+}
+
+.blue-bg {
+  background-color: $blue;
+}
+
+.product-info {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+
+  .product-info-left {
+    @include flex(flex-start, stretch);
+    flex-direction: column;
+    width: 100%;
+
+    .product-image-wrapper {
+      padding: 0px 40px;
+      position: relative;
+      z-index: 2;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .product-info-right {
+    .product-text {
+      padding-top: 30px;
+      margin-top: -25px;
+      // background-color: $blue;
+      position: relative;
+      z-index: 1;
+  
+      .product-title {
+        color: $white;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+  
+      .product-subtitle {
+        color: $offwhite;
+        font-size: 14px;
+      }
+    }
+
+    .price-container {
+      div {
+        @include flex(space-between, center);
+
+        .product-price {
+          @include flex(flex-start, flex-start);
+          color: $white;
+          font-size: 26px;
+          font-weight: bold;
+
+          span {
+            font-size: 18px;
+            font-weight: bold;
+          }
+        }
+
+        .price-controls-wrapper {
+          @include flex(center, center);
+          flex-direction: column;
+
+          .qty-label {
+            font-size: 12px;
+            color: $offwhite;
+            margin-bottom: 4px;
+          }
+
+          .price-controls {
+            .price-control {
+              @include flex(center, center);
+              width: 25px;
+              height: 25px;
+              font-size: 16px;
+              color: $white;
+              background-color: $sky-blue;
+              border: none;
+              border-radius: 4px;
+
+              &.disabled {
+                background-color: $light-blue;
+              }
+            }
+
+            .quantity {
+              color: $white;
+              font-size: 22px;
+              font-weight: bold;
+              padding: 0px 6px;
+            }
+          }
+        }
+      }
+
+      .add-to-cart {
+        border-radius: 2px;
+        width: 100%;
+        padding: 8px;
+        font-size: 20px;
+        background: linear-gradient($light-pink 50%, $neon-pink 50%);
+        border: none;
+        margin-top: 10px;
+        color: $white;
+        font-weight: bold;
+      }
+    }
+
+    .specifications-table {
+      table-layout: fixed;
+      width: 100%;
+
+      tbody {
+        tr {
+          &:first-child {
+            td {
+              border-top: none;
+            }
+          }
+
+          td {
+            border-top: 1px solid $offwhite;
+            padding: 7px 0px;
+
+            &:first-child {
+              width: 130px;
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: $sm-screen) {
+    flex-direction: row;
+
+    .product-info-left {
+      min-width: 250px;
+      width: 30%;
+
+      .product-image-wrapper {
+        padding: 0px 20px;
+      }
+    }
+
+    .product-info-right {
+      width: 75%;
+
+      .product-text {
+        padding-top: 15px;
+        margin-top: 0px;
+
+        .product-title {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: $md-screen) {
+    .product-info-left {
+      min-width: 300px;
+    }
+  }
+}
+
+.footer {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: $offwhite;
+  font-size: 12px;
+  line-height: 150%;
+}
